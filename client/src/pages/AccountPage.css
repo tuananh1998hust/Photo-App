@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css?family=Indie+Flower");
+
+.layout {
+  margin-top: 50px;
+  background-image: url("../imgs/login-layout.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.form-first {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+}
+
+.form-first .head {
+  font-family: "Indie Flower", cursive;
+  font-size: 36px;
+  color: #262626;
+  text-align: center;
+}
+
+.form-first .intro {
+  color: #999;
+  font-weight: 600;
+  font-size: 17px;
+  text-align: center;
+}
+
+.account {
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+}
