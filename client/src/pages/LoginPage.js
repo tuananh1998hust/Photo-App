@@ -45,9 +45,10 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { isAuthenticated, msg } = this.props.account;
+    const { msg } = this.props.account;
+    const token = localStorage.getItem("token");
 
-    if (isAuthenticated) {
+    if (token) {
       return <Redirect to="/home" />;
     }
 

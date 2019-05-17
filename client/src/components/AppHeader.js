@@ -5,7 +5,8 @@ import {
   Navbar,
   NavbarToggler,
   Nav,
-  NavItem
+  NavItem,
+  Spinner
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,7 +16,7 @@ import PropTypes from "prop-types";
 import { logout } from "../actions/accountActions";
 // Images
 import navlogo from "../imgs/nav-logo.png";
-import user from "../imgs/user.png";
+import userImg from "../imgs/user.png";
 import logouticon from "../imgs/logout.png";
 // CSS
 import "./AppHeader.css";
@@ -36,14 +37,19 @@ class AppHeader extends Component {
   };
 
   render() {
-    const { token } = this.props.account;
+    const { user } = this.props.account;
+    const token = localStorage.getItem("token");
 
     const authLink = (
       <Fragment>
         <NavItem className="nav-item">
-          <Link to="/profile/">
-            <img src={user} alt="user" />
-          </Link>
+          {user ? (
+            <Link to={`/profile/${user._id}`}>
+              <img src={userImg} alt="user" />
+            </Link>
+          ) : (
+            <Spinner size="sm" color="secondary" />
+          )}
         </NavItem>
         <NavItem className="nav-item" onClick={this.onClick}>
           <img src={logouticon} alt="logout" />

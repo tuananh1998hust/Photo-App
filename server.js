@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 // API Routes
 const users = require("./routes/api/users");
 const auth = require("./routes/api/auth");
+const posts = require("./routes/api/posts");
 // DB Config
 const { mongoURI } = require("./config/keys");
 
@@ -27,6 +28,7 @@ mongoose
 // Use Routes
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use("/api/posts", posts);
 
 const port = process.env.PORT || 5000;
 

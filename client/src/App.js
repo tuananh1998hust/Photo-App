@@ -42,7 +42,7 @@ class App extends Component {
             token={token}
           />
           <PrivateRoute
-            path="/profile/"
+            path="/profile/:id"
             exact
             component={ProfilePage}
             token={token}

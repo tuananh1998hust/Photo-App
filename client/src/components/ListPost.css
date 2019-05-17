@@ -1,0 +1,48 @@
+.post-item {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0 0 0;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+}
+
+.post-item .head {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.post-item .head:hover {
+  text-decoration: none;
+}
+
+.post-item .head .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.post-item .img-photo img {
+  width: 100%;
+}
+
+.post-item .likes {
+  margin-left: 15px;
+}
+
+.post-item .status {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.post-item .status .user {
+  color: #000;
+}
+
+.post-item .status .user:hover {
+  text-decoration: none;
+}
