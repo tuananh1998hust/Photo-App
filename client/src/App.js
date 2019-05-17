@@ -1,13 +1,15 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, Component } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import { Provider } from "react-redux";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 // Pages
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
-// Store
-import store from "./store";
+import ProfilePage from "./pages/ProfilePage";
+// Components
+import AppHeader from "./components/AppHeader";
 // Actions
 import { loadUser } from "./actions/accountActions";
 
@@ -18,27 +20,49 @@ const PrivateRoute = ({ component: Component, token, ...rest }) => (
   />
 );
 
-function App() {
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+class App extends Component {
+  componentDidMount() {
+    this.props.loadUser();
+  }
 
-  return (
-    <Provider store={store}>
+  render() {
+    const { token } = this.props.account;
+
+    return (
       <Router>
         <Fragment>
+          <AppHeader />
+
           <Route exact path="/" component={LoginPage} />
           <Route exact path="/account/signup/" component={RegisterPage} />
           <PrivateRoute
-            path="/home"
+            path="/home/"
             exact
             component={HomePage}
-            token={localStorage.token}
+            token={token}
+          />
+          <PrivateRoute
+            path="/profile/"
+            exact
+            component={ProfilePage}
+            token={token}
           />
         </Fragment>
       </Router>
-    </Provider>
-  );
+    );
+  }
 }
 
-export default App;
+App.propTypes = {
+  account: PropTypes.object.isRequired,
+  loadUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  account: state.account
+});
+
+export default connect(
+  mapStateToProps,
+  { loadUser }
+)(App);

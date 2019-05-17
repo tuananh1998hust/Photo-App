@@ -21,7 +21,8 @@ import "./AccountPage.css";
 class LoginPage extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    token: null
   };
 
   onChange = e => {
@@ -44,9 +45,9 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { token, msg } = this.props.account;
+    const { isAuthenticated, msg } = this.props.account;
 
-    if (token) {
+    if (isAuthenticated) {
       return <Redirect to="/home" />;
     }
 

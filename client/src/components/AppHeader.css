@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Indie+Flower");
+
+#navbar .nav-logo {
+  display: flex;
+  align-items: center;
+}
+
+#navbar .nav-logo p {
+  font-family: "Indie Flower", cursive;
+  font-size: 36px;
+  margin-left: 20px;
+  margin-bottom: 0;
+  color: #000;
+}
+
+#navbar .nav-logo img {
+  border-right: 1px solid #000;
+  padding-right: 20px;
+}
+
+#navbar .nav-item {
+  padding: 20px;
+}
+
+#navbar .nav-logo:hover {
+  text-decoration: none;
+}
