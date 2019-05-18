@@ -99,4 +99,11 @@ router.post("/:id/cmt", auth, (req, res) => {
   });
 });
 
+// @route    GET api/posts/:id
+// @desc     Get Posts By Id
+// @access   Public
+router.get("/:id", (req, res) => {
+  Post.findById(req.params.id).then(post => res.json(post));
+});
+
 module.exports = router;

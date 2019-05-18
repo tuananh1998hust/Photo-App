@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
+import PostDetailPage from "./pages/PostDetailPage";
 // Components
 import AppHeader from "./components/AppHeader";
 // Actions
@@ -45,6 +46,12 @@ class App extends Component {
             path="/profile/:id"
             exact
             component={ProfilePage}
+            token={token}
+          />
+          <PrivateRoute
+            path="/posts/:id"
+            exact
+            component={PostDetailPage}
             token={token}
           />
         </Fragment>

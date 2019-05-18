@@ -48,12 +48,76 @@ class ListPost extends Component {
 
   render() {
     const { loading, posts } = this.props.post;
+    const { postId } = this.props;
     const { text } = this.state;
 
     return (
       <div className="p-2">
         {loading === true ? (
           <Spinner style={{ width: "3rem", height: "3rem" }} />
+        ) : postId ? (
+          posts
+            .filter(post => post._id === postId)
+            .map(post => (
+              <div className="post-item" key={post._id}>
+                <Link className="head" to={`/profile/${post.user}`}>
+                  <img src={post.avatar} alt="avatar" className="avatar" />
+                  {post.name}
+                </Link>
+
+                <div className="img-photo">
+                  <img src={post.photo} alt="upload" className="photo" />
+                </div>
+
+                <div className="likes">
+                  <img src={unlike} alt="check like" />
+                </div>
+
+                <div className="status">
+                  <Link className="user" to={`/profile/${post.user}`}>
+                    {post.name}
+                  </Link>
+                  <p className="text-secondary ml-2 mb-0 p-2">{post.status}</p>
+                </div>
+
+                <div className="view-post">
+                  <Link className="view-link" to={`/posts/${post._id}`}>
+                    View all comments
+                  </Link>
+                </div>
+
+                <div className="cmts-list">
+                  {!post.comments
+                    ? null
+                    : post.comments.slice(post.comments.length - 2).map(cmt => (
+                        <div className="cmt-item" key={cmt._id}>
+                          <Link
+                            className="cmt-user"
+                            to={`/profile/${cmt.user}`}
+                          >
+                            {cmt.name}
+                          </Link>
+                          <p className="cmt-text">{cmt.text}</p>
+                        </div>
+                      ))}
+                </div>
+
+                <Form
+                  className="cmt-post"
+                  onSubmit={this.onSubmit.bind(this, post._id)}
+                >
+                  <Input
+                    className="input"
+                    name="text"
+                    type="textarea"
+                    placeholder="Add a comment..."
+                    value={text}
+                    onChange={this.onChange}
+                  />
+                  <button className="btn">Post</button>
+                </Form>
+              </div>
+            ))
         ) : (
           posts.map(post => (
             <div className="post-item" key={post._id}>
