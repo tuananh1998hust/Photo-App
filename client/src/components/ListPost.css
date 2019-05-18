@@ -9,20 +9,28 @@
 .post-item .head {
   display: flex;
   align-items: center;
-  margin-left: 15px;
-  margin-bottom: 15px;
-  color: #000;
+  padding: 0 15px 15px 15px;
+  position: relative;
 }
 
-.post-item .head:hover {
+.post-item .head .link {
+  color: #000;
+  font-weight: 600;
+}
+
+.post-item .head .link:hover {
   text-decoration: none;
 }
 
-.post-item .head .avatar {
+.post-item .head .link .avatar {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
   margin-right: 10px;
+}
+
+.post-item .head .delete {
+  position: absolute;
+  right: 15px;
 }
 
 .post-item .img-photo img {
@@ -41,6 +49,7 @@
 
 .post-item .status .user {
   color: #000;
+  font-weight: 600;
 }
 
 .post-item .status .user:hover {
@@ -59,6 +68,7 @@
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .post-item .cmts-list .cmt-item .cmt-user {
@@ -74,6 +84,11 @@
 
 .post-item .cmts-list .cmt-item .cmt-user:hover {
   text-decoration: none;
+}
+
+.post-item .cmts-list .cmt-item .delete {
+  position: absolute;
+  right: 15px;
 }
 
 .post-item .cmt-post {

@@ -11,3 +11,5 @@ export const POST_ERR = "POST_ERR";
 export const GET_POSTS = "GET_POSTS";
 export const LOAD_POSTS = "LOAD_POSTS";
 export const ADD_CMT = "ADD_CMT";
+export const DELETE_POST = "DELETE_POST";
+export const DELETE_CMT = "DELETE_CMT";

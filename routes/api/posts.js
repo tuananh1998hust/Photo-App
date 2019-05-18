@@ -106,4 +106,31 @@ router.get("/:id", (req, res) => {
   Post.findById(req.params.id).then(post => res.json(post));
 });
 
+// @route    DELETE api/posts/:id
+// @desc     Delete Posts By Id
+// @access   Private
+router.delete("/:id", auth, (req, res) => {
+  Post.findById(req.params.id)
+    .then(post => post.remove().then(() => res.json({ Delete: "Success" })))
+    .catch(err => res.json({ Delete: "Failed" }));
+});
+
+// @route    DELETE api/posts/:id/:cmtId
+// @desc     Delete Cmt
+// @access   Private
+router.delete("/:id/cmt/:cmtId", auth, (req, res) => {
+  const { id, cmtId } = req.params;
+
+  Post.findById(id).then(post => {
+    cmts = post.comments;
+
+    // Get Remove Index
+    const removeIndex = cmts.map(cmt => cmt.id).indexOf(cmtId);
+
+    post.comments.splice(removeIndex, 1);
+
+    post.save().then(post => res.json(post));
+  });
+});
+
 module.exports = router;

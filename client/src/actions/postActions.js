@@ -6,7 +6,9 @@ import {
   CLEAR_ERROR,
   LOAD_POSTS,
   GET_POSTS,
-  ADD_CMT
+  ADD_CMT,
+  DELETE_POST,
+  DELETE_CMT
 } from "./types";
 
 // Add New Post
@@ -46,6 +48,29 @@ export const addCmt = (newCmt, postId) => dispatch => {
   axios.post(`/api/posts/${postId}/cmt`, newCmt).then(res =>
     dispatch({
       type: ADD_CMT,
+      payload: {
+        id: postId,
+        data: res.data
+      }
+    })
+  );
+};
+
+// Delete Post
+export const deletePost = id => dispatch => {
+  axios.delete(`/api/posts/${id}`).then(res =>
+    dispatch({
+      type: DELETE_POST,
+      payload: id
+    })
+  );
+};
+
+// Delete Cmt
+export const deleteCmt = (postId, cmtId) => dispatch => {
+  axios.delete(`/api/posts/${postId}/cmt/${cmtId}`).then(res =>
+    dispatch({
+      type: DELETE_CMT,
       payload: {
         id: postId,
         data: res.data

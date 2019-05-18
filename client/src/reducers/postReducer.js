@@ -4,7 +4,9 @@ import {
   CLEAR_ERROR,
   GET_POSTS,
   LOAD_POSTS,
-  ADD_CMT
+  ADD_CMT,
+  DELETE_POST,
+  DELETE_CMT
 } from "../actions/types";
 
 const initialState = {
@@ -56,6 +58,24 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post._id !== action.payload)
+      };
+
+    case DELETE_CMT:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post._id === action.payload.id) {
+            post = action.payload.data;
+          }
+
+          return post;
+        })
       };
 
     default:

@@ -1,12 +1,17 @@
 import React, { Component } from "react";
-import { Form, Input, Spinner } from "reactstrap";
+import { Button, Form, Input, Spinner } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 // Actions
 import { loadUser } from "../actions/accountActions";
-import { getPosts, addCmt } from "../actions/postActions";
+import {
+  getPosts,
+  addCmt,
+  deletePost,
+  deleteCmt
+} from "../actions/postActions";
 // CSS
 import "./ListPost.css";
 // Images
@@ -46,8 +51,18 @@ class ListPost extends Component {
     });
   };
 
+  onDeletePost = id => {
+    this.props.deletePost(id);
+  };
+
+  onDeleteCmt = (postId, cmtId) => {
+    console.log(postId, cmtId);
+    this.props.deleteCmt(postId, cmtId);
+  };
+
   render() {
     const { loading, posts } = this.props.post;
+    const { user } = this.props.account;
     const { postId } = this.props;
     const { text } = this.state;
 
@@ -60,10 +75,26 @@ class ListPost extends Component {
             .filter(post => post._id === postId)
             .map(post => (
               <div className="post-item" key={post._id}>
-                <Link className="head" to={`/profile/${post.user}`}>
-                  <img src={post.avatar} alt="avatar" className="avatar" />
-                  {post.name}
-                </Link>
+                {user ? (
+                  <div className="head">
+                    <Link className="link" to={`/profile/${post.user}`}>
+                      <img src={post.avatar} alt="avatar" className="avatar" />
+                      {post.name}
+                    </Link>
+
+                    {post.user === user._id ? (
+                      <Button
+                        className="delete"
+                        size="sm"
+                        color="danger"
+                        onClick={this.onDeletePost.bind(this, post._id)}
+                        outline
+                      >
+                        &times;
+                      </Button>
+                    ) : null}
+                  </div>
+                ) : null}
 
                 <div className="img-photo">
                   <img src={post.photo} alt="upload" className="photo" />
@@ -89,7 +120,7 @@ class ListPost extends Component {
                 <div className="cmts-list">
                   {!post.comments
                     ? null
-                    : post.comments.slice(post.comments.length - 2).map(cmt => (
+                    : post.comments.map(cmt => (
                         <div className="cmt-item" key={cmt._id}>
                           <Link
                             className="cmt-user"
@@ -98,6 +129,23 @@ class ListPost extends Component {
                             {cmt.name}
                           </Link>
                           <p className="cmt-text">{cmt.text}</p>
+                          {user ? (
+                            cmt.user === user._id ? (
+                              <Button
+                                color="danger"
+                                size="sm"
+                                className="delete"
+                                onClick={this.onDeleteCmt.bind(
+                                  this,
+                                  post._id,
+                                  cmt._id
+                                )}
+                                outline
+                              >
+                                <i className="fas fa-trash" />
+                              </Button>
+                            ) : null
+                          ) : null}
                         </div>
                       ))}
                 </div>
@@ -121,10 +169,28 @@ class ListPost extends Component {
         ) : (
           posts.map(post => (
             <div className="post-item" key={post._id}>
-              <Link className="head" to={`/profile/${post.user}`}>
-                <img src={post.avatar} alt="avatar" className="avatar" />
-                {post.name}
-              </Link>
+              {user ? (
+                <div className="head">
+                  <Link className="link" to={`/profile/${post.user}`}>
+                    <img src={post.avatar} alt="avatar" className="avatar" />
+                    {post.name}
+                  </Link>
+
+                  {user ? (
+                    post.user === user._id ? (
+                      <Button
+                        color="danger"
+                        className="delete"
+                        size="sm"
+                        onClick={this.onDeletePost.bind(this, post._id)}
+                        outline
+                      >
+                        <i className="fas fa-trash" />
+                      </Button>
+                    ) : null
+                  ) : null}
+                </div>
+              ) : null}
 
               <div className="img-photo">
                 <img src={post.photo} alt="upload" className="photo" />
@@ -156,6 +222,23 @@ class ListPost extends Component {
                           {cmt.name}
                         </Link>
                         <p className="cmt-text">{cmt.text}</p>
+                        {user ? (
+                          cmt.user === user._id ? (
+                            <Button
+                              color="danger"
+                              size="sm"
+                              className="delete"
+                              onClick={this.onDeleteCmt.bind(
+                                this,
+                                post._id,
+                                cmt._id
+                              )}
+                              outline
+                            >
+                              <i className="fas fa-trash" />
+                            </Button>
+                          ) : null
+                        ) : null}
                       </div>
                     ))}
               </div>
@@ -187,7 +270,9 @@ ListPost.propTypes = {
   getPosts: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
   loadUser: PropTypes.func.isRequired,
-  addCmt: PropTypes.func.isRequired
+  addCmt: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
+  deleteCmt: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -197,5 +282,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPosts, loadUser, addCmt }
+  { getPosts, loadUser, addCmt, deletePost, deleteCmt }
 )(ListPost);
