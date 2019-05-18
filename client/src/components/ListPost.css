@@ -46,3 +46,52 @@
 .post-item .status .user:hover {
   text-decoration: none;
 }
+
+.post-item .view-post {
+  margin-left: 15px;
+}
+
+.post-item .cmts-list {
+  margin-left: 15px;
+}
+
+.post-item .cmts-list .cmt-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.post-item .cmts-list .cmt-item .cmt-user {
+  color: #000;
+  font-weight: 600;
+}
+
+.post-item .cmts-list .cmt-item .cmt-text {
+  margin-bottom: 0;
+  margin-left: 10px;
+  color: #000;
+}
+
+.post-item .cmts-list .cmt-item .cmt-user:hover {
+  text-decoration: none;
+}
+
+.post-item .cmt-post {
+  display: flex;
+  align-items: center;
+  border: 0px solid #ddd;
+}
+
+.post-item .cmt-post .input {
+  border: none;
+  border-top: #ddd;
+}
+
+.post-item .cmt-post .btn {
+  border: none;
+  transition: all 500ms;
+}
+
+.post-item .cmt-post .btn:hover {
+  color: #7ebcfb;
+}

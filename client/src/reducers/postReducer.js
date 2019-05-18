@@ -3,7 +3,8 @@ import {
   POST_ERR,
   CLEAR_ERROR,
   GET_POSTS,
-  LOAD_POSTS
+  LOAD_POSTS,
+  ADD_CMT
 } from "../actions/types";
 
 const initialState = {
@@ -37,6 +38,18 @@ export default function(state = initialState, action) {
         ...state,
         posts: action.payload,
         loading: false
+      };
+
+    case ADD_CMT:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post._id === action.payload.id) {
+            post = action.payload.data;
+          }
+
+          return post;
+        })
       };
 
     case LOAD_POSTS:

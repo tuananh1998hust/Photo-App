@@ -81,4 +81,22 @@ router.get("/", (req, res) => {
     .then(posts => res.json(posts));
 });
 
+// @route    POST api/posts/:id/cmt
+// @desc     Add Comment By Id
+// @access   Private
+router.post("/:id/cmt", auth, (req, res) => {
+  const { text, name } = req.body;
+  const user = req.user;
+
+  Post.findById(req.params.id).then(cmt => {
+    cmt.comments.push({
+      user,
+      text,
+      name
+    });
+
+    cmt.save().then(cmt => res.json(cmt));
+  });
+});
+
 module.exports = router;

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Input, Spinner } from "reactstrap";
+import { Form, Input, Spinner } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 // Actions
-import { getPosts } from "../actions/postActions";
+import { loadUser } from "../actions/accountActions";
+import { getPosts, addCmt } from "../actions/postActions";
 // CSS
 import "./ListPost.css";
 // Images
@@ -26,16 +27,23 @@ class ListPost extends Component {
     });
   };
 
-  onKeyUp = e => {
+  onSubmit = (postId, e) => {
+    e.preventDefault();
+
     const { text } = this.state;
+    const { name } = this.props.account.user;
 
-    if (e.keyCode === 13) {
-      console.log(text);
+    const newCmt = {
+      name,
+      text
+    };
 
-      this.setState({
-        text: ""
-      });
-    }
+    this.props.addCmt(newCmt, postId);
+
+    this.setState({
+      text: "",
+      postId: ""
+    });
   };
 
   render() {
@@ -58,7 +66,9 @@ class ListPost extends Component {
                 <img src={post.photo} alt="upload" className="photo" />
               </div>
 
-              <img className="likes" src={unlike} alt="check like" />
+              <div className="likes">
+                <img src={unlike} alt="check like" />
+              </div>
 
               <div className="status">
                 <Link className="user" to={`/profile/${post.user}`}>
@@ -67,14 +77,39 @@ class ListPost extends Component {
                 <p className="text-secondary ml-2 mb-0 p-2">{post.status}</p>
               </div>
 
-              <Input
-                name="text"
-                type="textarea"
-                placeholder="Add a comment..."
-                value={text}
-                onChange={this.onChange}
-                onKeyUp={this.onKeyUp}
-              />
+              <div className="view-post">
+                <Link className="view-link" to={`/posts/${post._id}`}>
+                  View all comments
+                </Link>
+              </div>
+
+              <div className="cmts-list">
+                {!post.comments
+                  ? null
+                  : post.comments.slice(post.comments.length - 2).map(cmt => (
+                      <div className="cmt-item" key={cmt._id}>
+                        <Link className="cmt-user" to={`/profile/${cmt.user}`}>
+                          {cmt.name}
+                        </Link>
+                        <p className="cmt-text">{cmt.text}</p>
+                      </div>
+                    ))}
+              </div>
+
+              <Form
+                className="cmt-post"
+                onSubmit={this.onSubmit.bind(this, post._id)}
+              >
+                <Input
+                  className="input"
+                  name="text"
+                  type="textarea"
+                  placeholder="Add a comment..."
+                  value={text}
+                  onChange={this.onChange}
+                />
+                <button className="btn">Post</button>
+              </Form>
             </div>
           ))
         )}
@@ -85,14 +120,18 @@ class ListPost extends Component {
 
 ListPost.propTypes = {
   post: PropTypes.object.isRequired,
-  getPosts: PropTypes.func.isRequired
+  getPosts: PropTypes.func.isRequired,
+  account: PropTypes.object.isRequired,
+  loadUser: PropTypes.func.isRequired,
+  addCmt: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  post: state.post
+  post: state.post,
+  account: state.account
 });
 
 export default connect(
   mapStateToProps,
-  { getPosts }
+  { getPosts, loadUser, addCmt }
 )(ListPost);

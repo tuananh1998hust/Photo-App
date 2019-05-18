@@ -5,7 +5,8 @@ import {
   POST_ERR,
   CLEAR_ERROR,
   LOAD_POSTS,
-  GET_POSTS
+  GET_POSTS,
+  ADD_CMT
 } from "./types";
 
 // Add New Post
@@ -36,6 +37,19 @@ export const getPosts = () => dispatch => {
     dispatch({
       type: GET_POSTS,
       payload: res.data
+    })
+  );
+};
+
+// Add Cmt
+export const addCmt = (newCmt, postId) => dispatch => {
+  axios.post(`/api/posts/${postId}/cmt`, newCmt).then(res =>
+    dispatch({
+      type: ADD_CMT,
+      payload: {
+        id: postId,
+        data: res.data
+      }
     })
   );
 };
