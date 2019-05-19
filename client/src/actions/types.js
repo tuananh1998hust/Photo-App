@@ -13,3 +13,6 @@ export const LOAD_POSTS = "LOAD_POSTS";
 export const ADD_CMT = "ADD_CMT";
 export const DELETE_POST = "DELETE_POST";
 export const DELETE_CMT = "DELETE_CMT";
+export const GET_PROFILE = "GET_PROFILE";
+export const LOAD_PROFILE = "LOAD_PROFILE";
+export const UPDATE_AVATAR = "UPDATE_AVATAR";

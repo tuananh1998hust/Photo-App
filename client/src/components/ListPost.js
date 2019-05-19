@@ -56,7 +56,6 @@ class ListPost extends Component {
   };
 
   onDeleteCmt = (postId, cmtId) => {
-    console.log(postId, cmtId);
     this.props.deleteCmt(postId, cmtId);
   };
 

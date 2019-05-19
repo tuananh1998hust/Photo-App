@@ -5,6 +5,8 @@ const path = require("path");
 
 // Post Model
 const Post = require("../../models/posts");
+// User Model
+const User = require("../../models/users");
 // Middleware
 const auth = require("../../middleware/auth");
 
@@ -130,6 +132,30 @@ router.delete("/:id/cmt/:cmtId", auth, (req, res) => {
     post.comments.splice(removeIndex, 1);
 
     post.save().then(post => res.json(post));
+  });
+});
+
+// @route    PATCH api/users/:id/avatar
+// @desc     Update Avatar
+// @access   Private
+router.patch("/:id/avatar", auth, (req, res) => {
+  upload(req, res, err => {
+    if (err) {
+      return res.json({ msg: err });
+    } else {
+      if (req.file == undefined) {
+        return res.json({ msg: ["Error: No File Selected!"] });
+      } else {
+        const photo = `/uploads/${req.file.filename}`;
+
+        User.findById(req.params.id).then(user => {
+          // Update Avatar User
+          user.avatar = photo;
+
+          user.save().then(user => res.json(user));
+        });
+      }
+    }
   });
 });
 

@@ -18,7 +18,7 @@ class UserHead extends Component {
             <img
               src={user.avatar}
               alt="avatar"
-              className="avatar"
+              className="avatar rounded-circle"
               width="64x"
               height="64px"
             />

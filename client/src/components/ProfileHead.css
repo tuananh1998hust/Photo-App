@@ -1,0 +1,36 @@
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+  padding: 50px 125px;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+.profile-header .avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.profile-header .info {
+  margin-left: 25px;
+}
+
+.profile-header .info .name {
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 500px) {
+  .profile-header {
+    margin-bottom: 25px;
+    padding: 10px 25px;
+  }
+
+  .profile-header .avatar {
+    width: 128px;
+    height: 128px;
+  }
+}

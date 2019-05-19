@@ -64,4 +64,15 @@ router.post("/register", validateRegisterInput, (req, res) => {
   });
 });
 
+// @route    GET api/users/:id
+// @desc     Get User By Id
+// @access   Public
+router.get("/:id", (req, res) => {
+  User.findById(req.params.id)
+    .select("-password")
+    .then(user => {
+      res.json(user);
+    });
+});
+
 module.exports = router;
