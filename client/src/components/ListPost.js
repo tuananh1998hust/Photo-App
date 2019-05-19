@@ -10,11 +10,13 @@ import {
   getPosts,
   addCmt,
   deletePost,
-  deleteCmt
+  deleteCmt,
+  likePost
 } from "../actions/postActions";
 // CSS
 import "./ListPost.css";
 // Images
+import like from "../imgs/like.png";
 import unlike from "../imgs/unlike.png";
 
 class ListPost extends Component {
@@ -59,6 +61,10 @@ class ListPost extends Component {
     this.props.deleteCmt(postId, cmtId);
   };
 
+  onLikePost = id => {
+    this.props.likePost(id);
+  };
+
   render() {
     const { loading, posts } = this.props.post;
     const { user } = this.props.account;
@@ -99,8 +105,23 @@ class ListPost extends Component {
                   <img src={post.photo} alt="upload" className="photo" />
                 </div>
 
-                <div className="likes">
-                  <img src={unlike} alt="check like" />
+                <div
+                  className="likes mb-2"
+                  onClick={this.onLikePost.bind(this, post._id)}
+                >
+                  <span className="mr-2">{post.likes.length} likes</span>
+                  <img
+                    src={
+                      !user
+                        ? unlike
+                        : post.likes
+                            .map(item => item.user)
+                            .indexOf(user._id) === -1
+                        ? unlike
+                        : like
+                    }
+                    alt="check like"
+                  />
                 </div>
 
                 <div className="status">
@@ -195,8 +216,22 @@ class ListPost extends Component {
                 <img src={post.photo} alt="upload" className="photo" />
               </div>
 
-              <div className="likes">
-                <img src={unlike} alt="check like" />
+              <div
+                className="likes mb-2"
+                onClick={this.onLikePost.bind(this, post._id)}
+              >
+                <span className="mr-2">{post.likes.length} likes</span>
+                <img
+                  src={
+                    !user
+                      ? unlike
+                      : post.likes.map(item => item.user).indexOf(user._id) ===
+                        -1
+                      ? unlike
+                      : like
+                  }
+                  alt="check like"
+                />
               </div>
 
               <div className="status">
@@ -271,7 +306,8 @@ ListPost.propTypes = {
   loadUser: PropTypes.func.isRequired,
   addCmt: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
-  deleteCmt: PropTypes.func.isRequired
+  deleteCmt: PropTypes.func.isRequired,
+  likePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -281,5 +317,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPosts, loadUser, addCmt, deletePost, deleteCmt }
+  { getPosts, loadUser, addCmt, deletePost, deleteCmt, likePost }
 )(ListPost);

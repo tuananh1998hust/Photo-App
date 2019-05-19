@@ -8,7 +8,8 @@ import {
   GET_POSTS,
   ADD_CMT,
   DELETE_POST,
-  DELETE_CMT
+  DELETE_CMT,
+  LIKE_POST
 } from "./types";
 
 // Add New Post
@@ -73,6 +74,19 @@ export const deleteCmt = (postId, cmtId) => dispatch => {
       type: DELETE_CMT,
       payload: {
         id: postId,
+        data: res.data
+      }
+    })
+  );
+};
+
+// Like Post & Unlike Post
+export const likePost = id => dispatch => {
+  axios.post(`/api/posts/${id}/like`).then(res =>
+    dispatch({
+      type: LIKE_POST,
+      payload: {
+        id,
         data: res.data
       }
     })

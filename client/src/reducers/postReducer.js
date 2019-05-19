@@ -6,7 +6,8 @@ import {
   LOAD_POSTS,
   ADD_CMT,
   DELETE_POST,
-  DELETE_CMT
+  DELETE_CMT,
+  LIKE_POST
 } from "../actions/types";
 
 const initialState = {
@@ -67,6 +68,18 @@ export default function(state = initialState, action) {
       };
 
     case DELETE_CMT:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post._id === action.payload.id) {
+            post = action.payload.data;
+          }
+
+          return post;
+        })
+      };
+
+    case LIKE_POST:
       return {
         ...state,
         posts: state.posts.map(post => {

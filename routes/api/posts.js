@@ -159,4 +159,26 @@ router.patch("/:id/avatar", auth, (req, res) => {
   });
 });
 
+// @route    POST api/posts/:id/like
+// @desc     Like Post And UnLike Post
+// @access   Private
+router.post("/:id/like", auth, (req, res) => {
+  Post.findById(req.params.id).then(post => {
+    const user = req.user;
+
+    // Check Index
+    const index = post.likes.map(item => item.user.toString()).indexOf(user);
+
+    if (index === -1) {
+      // Like Post
+      post.likes.push({ user });
+    } else {
+      // Unlike
+      post.likes.splice(index, 1);
+    }
+
+    post.save().then(post => res.json(post));
+  });
+});
+
 module.exports = router;

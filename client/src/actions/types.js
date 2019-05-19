@@ -16,3 +16,4 @@ export const DELETE_CMT = "DELETE_CMT";
 export const GET_PROFILE = "GET_PROFILE";
 export const LOAD_PROFILE = "LOAD_PROFILE";
 export const UPDATE_AVATAR = "UPDATE_AVATAR";
+export const LIKE_POST = "LIKE_POST";
